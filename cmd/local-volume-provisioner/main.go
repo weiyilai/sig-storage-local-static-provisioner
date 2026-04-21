@@ -54,6 +54,8 @@ func main() {
 	flag.DurationVar(&configSyncPeriod, "config-sync-period", 5*time.Second, "the period to check if there has been any config changes")
 	flag.Parse()
 	flag.Set("logtostderr", "true")
+	flag.Set("legacy_stderr_threshold_behavior", "false")
+	flag.Set("stderrthreshold", "INFO")
 
 	provisionerConfig := common.ProvisionerConfiguration{
 		StorageClassConfig: make(map[string]common.MountConfig),
