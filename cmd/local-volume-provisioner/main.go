@@ -53,9 +53,12 @@ func main() {
 	flag.DurationVar(&discoveryPeriod, "discovery-period", 10*time.Second, "the period for local volume discovery")
 	flag.DurationVar(&configSyncPeriod, "config-sync-period", 5*time.Second, "the period to check if there has been any config changes")
 	flag.Parse()
-	flag.Set("logtostderr", "true")
-	flag.Set("legacy_stderr_threshold_behavior", "false")
-	flag.Set("stderrthreshold", "INFO")
+	if err := flag.Set("logtostderr", "true"); err != nil {
+		klog.Errorf("Failed to set logtostderr: %v", err)
+	}
+	if err := flag.Set("legacy_stderr_threshold_behavior", "false"); err != nil {
+		klog.Errorf("Failed to set legacy_stderr_threshold_behavior: %v", err)
+	}
 
 	provisionerConfig := common.ProvisionerConfiguration{
 		StorageClassConfig: make(map[string]common.MountConfig),
